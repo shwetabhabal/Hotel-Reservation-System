@@ -7,8 +7,8 @@ public class Hotel {
     String name;
     Map<String, Integer> weekdayRate;
     Map<String, Integer> weekendRate;
-    public Hotel (String name){
-        this.name = name;
+    public Hotel (String hotel){
+        this.name = hotel;
         this.weekdayRate = new HashMap<>();
         this.weekendRate = new HashMap<>();
     }
@@ -25,10 +25,6 @@ public class Hotel {
     public int getWeekendRate(String customerType){
         Integer rate = weekendRate.get(customerType);
         return rate != null ? rate :0;
-    }
-    //set rate for specific customer type
-    public void  setRates(String customerType, int rate ){
-        rates.put(customerType, rate);
     }
     public String getName() {
         return name;
