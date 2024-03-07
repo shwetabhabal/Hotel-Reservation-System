@@ -20,7 +20,7 @@ public class HotelReservation {
             }
         }
     }
-    public int getTotalRateForDates(String hotelName, LocalDate startDate, LocalDate endDate, String customerType) {
+    public int getTotalRateForDates(String hotelName, LocalDate startDate, LocalDate endDate, String customerType){
         Hotel hotel = hotels.get(hotelName);
         if (hotel != null) {
             int totalRate = 0;
@@ -31,7 +31,7 @@ public class HotelReservation {
             }
             return totalRate;
         }
-        return 0; // or throw exception
+        return 0;
     }
     public String findCheapestHotel(LocalDate startDate, LocalDate endDate, String customerType) {
         int minTotalRate = Integer.MAX_VALUE;
