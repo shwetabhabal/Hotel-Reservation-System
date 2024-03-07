@@ -50,19 +50,19 @@ public class HotelReservation {
 
         return cheapestHotel;
     }
-    public static void main(String[] args) {
-        HotelReservation hotelReservation = new HotelReservation();
-        hotelReservation.setHotels("Lakewood");
-        hotelReservation.setRates("Lakewood", Map.of("regular", 110));
-        hotelReservation.setHotels("Bridgewood");
-        hotelReservation.setRates("Bridgewood", Map.of("regular", 160));
-        hotelReservation.setHotels("Ridgewood");
-        hotelReservation.setRates("Ridgewood", Map.of("regular", 220));
-        LocalDate startDate = LocalDate.parse("2020-09-10");
-        LocalDate endDate = LocalDate.parse("2020-09-12");
-        String customerType = "regular";
-        String cheapHotel = hotelReservation.findCheapestHotel(startDate,endDate, customerType);
-        int totalRate = hotelReservation.getTotalRateForDates(cheapHotel, startDate, endDate, customerType);
-        System.out.println("Cheapest Hotel: "+cheapHotel+" Total Rates: "+totalRate);
-    }
+//    public static void main(String[] args) {
+//        HotelReservation hotelReservation = new HotelReservation();
+//        hotelReservation.setHotels("Lakewood");
+//        hotelReservation.setRates("Lakewood", Map.of("regular", 110));
+//        hotelReservation.setHotels("Bridgewood");
+//        hotelReservation.setRates("Bridgewood", Map.of("regular", 160));
+//        hotelReservation.setHotels("Ridgewood");
+//        hotelReservation.setRates("Ridgewood", Map.of("regular", 220));
+//        LocalDate startDate = LocalDate.parse("2020-09-10");
+//        LocalDate endDate = LocalDate.parse("2020-09-12");
+//        String customerType = "regular";
+//        String cheapHotel = hotelReservation.findCheapestHotel(startDate,endDate, customerType);
+//        int totalRate = hotelReservation.getTotalRateForDates(cheapHotel, startDate, endDate, customerType);
+//        System.out.println("Cheapest Hotel: "+cheapHotel+" Total Rates: "+totalRate);
+//    }
 }
