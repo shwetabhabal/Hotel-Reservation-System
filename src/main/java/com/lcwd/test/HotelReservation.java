@@ -1,5 +1,6 @@
 package com.lcwd.test;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,46 +10,41 @@ public class HotelReservation {
     public HotelReservation(){
         this.hotels = new HashMap<>();
     }
-    public  void setHotels(String name){
-        hotels.put(name, new Hotel(name));
+    public  void setHotels(String name, Hotel hotel){
+        hotels.put(name, hotel);
     }
-    public void setRates(String hotelName, Map<String, Integer> rates){
-        Hotel hotel = hotels.get(hotelName);
-        if(hotel != null){
-            for(String customerType : rates.keySet()){
-                hotel.setRates(customerType, rates.get(customerType));
-            }
-        }
+    private boolean isWeekend(LocalDate date) {
+        DayOfWeek dayOfWeek = date.getDayOfWeek();
+        return dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY;
     }
-    public int getTotalRateForDates(String hotelName, LocalDate startDate, LocalDate endDate, String customerType){
-        Hotel hotel = hotels.get(hotelName);
-        if (hotel != null) {
-            int totalRate = 0;
-            LocalDate date = startDate;
-            while (!date.isAfter(endDate)) {
-                totalRate += hotel.getRates(customerType);
-                date = date.plusDays(1);
+    public int getTotalRateForDates(Hotel hotel, LocalDate startDate, LocalDate endDate, String customerType){
+        int totalRate = 0;
+
+        LocalDate date = startDate;
+        while (!date.isAfter(endDate)) {
+            if (isWeekend(date)) {
+                totalRate += hotel.getWeekendRate(customerType);
+            } else {
+                totalRate += hotel.getWeekdayRate(customerType);
             }
-            return totalRate;
+            date = date.plusDays(1);
         }
-        return 0;
+
+        return totalRate;
     }
     public String findCheapestHotel(LocalDate startDate, LocalDate endDate, String customerType) {
         int minTotalRate = Integer.MAX_VALUE;
-        String cheapestHotel = null;
+        Hotel cheapestHotel = null;
 
-        for (Map.Entry<String, Hotel> entry : hotels.entrySet()) {
-            int totalRate = getTotalRateForDates(entry.getKey(), startDate, endDate, customerType);
+        for (Hotel hotel : hotels.values()) {
+            int totalRate = getTotalRateForDates(hotel, startDate, endDate, customerType);
             if (totalRate < minTotalRate) {
                 minTotalRate = totalRate;
-                cheapestHotel = entry.getKey();
-            } else if (totalRate == minTotalRate && entry.getKey().compareTo(cheapestHotel) < 0) {
-                // If rates are the same, select the hotel with the lexicographically smaller name
-                cheapestHotel = entry.getKey();
+                cheapestHotel = hotel;
             }
         }
 
-        return cheapestHotel;
+        return cheapestHotel != null ? cheapestHotel.getName() + ", Total Rates: $" + minTotalRate : "No hotels available";
     }
 //    public static void main(String[] args) {
 //        HotelReservation hotelReservation = new HotelReservation();
@@ -65,4 +61,6 @@ public class HotelReservation {
 //        int totalRate = hotelReservation.getTotalRateForDates(cheapHotel, startDate, endDate, customerType);
 //        System.out.println("Cheapest Hotel: "+cheapHotel+" Total Rates: "+totalRate);
 //    }
+    public static void main(String[] args) {
+    }
 }
