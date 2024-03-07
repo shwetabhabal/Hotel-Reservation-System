@@ -14,19 +14,19 @@ public class HotelReservationTest {
     // Set up hotels with their rates
     @Test
     public void findCheapestHotelTest() {
-        Hotel lakewood = new Hotel("Lakewood");
+        Hotel lakewood = new Hotel("Lakewood", 3);
         lakewood.setWeekdayRate("regular", 110);
         lakewood.setWeekendRate("regular", 90);
         hotelReservation.setHotels("Lakewood", lakewood);
 
         // Set up Bridgewood hotel
-        Hotel bridgewood = new Hotel("Bridgewood");
+        Hotel bridgewood = new Hotel("Bridgewood",4);
         bridgewood.setWeekdayRate("regular", 160);
         bridgewood.setWeekendRate("regular", 60);
         hotelReservation.setHotels("Bridgewood", bridgewood);
 
         // Set up Ridgewood hotel
-        Hotel ridgewood = new Hotel("Ridgewood");
+        Hotel ridgewood = new Hotel("Ridgewood", 5);
         ridgewood.setWeekdayRate("regular", 220);
         ridgewood.setWeekendRate("regular", 150);
         hotelReservation.setHotels("Ridgewood", ridgewood);

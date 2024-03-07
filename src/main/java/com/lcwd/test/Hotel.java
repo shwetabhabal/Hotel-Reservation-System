@@ -7,8 +7,10 @@ public class Hotel {
     String name;
     Map<String, Integer> weekdayRate;
     Map<String, Integer> weekendRate;
-    public Hotel (String hotel){
+    private int rating;
+    public Hotel (String hotel, int rating){
         this.name = hotel;
+        this.rating = rating;
         this.weekdayRate = new HashMap<>();
         this.weekendRate = new HashMap<>();
     }
