@@ -10,36 +10,34 @@ import java.util.Map;
 
 public class HotelReservationTest {
 
-    HotelReservation hotelReservation = new HotelReservation();
-    // Set up hotels with their rates
     @Test
-//    public void findBestRatedHotelTest() {
-//        Hotel lakewood = new Hotel("Lakewood", 3);
-//        lakewood.setWeekdayRate("regular", 110);
-//        lakewood.setWeekendRate("regular", 90);
-//        hotelReservation.setHotels("Lakewood", lakewood);
-//
-//        // Set up Bridgewood hotel
-//        Hotel bridgewood = new Hotel("Bridgewood",4);
-//        bridgewood.setWeekdayRate("regular", 160);
-//        bridgewood.setWeekendRate("regular", 60);
-//        hotelReservation.setHotels("Bridgewood", bridgewood);
-//
-//        // Set up Ridgewood hotel
-//        Hotel ridgewood = new Hotel("Ridgewood", 5);
-//        ridgewood.setWeekdayRate("regular", 220);
-//        ridgewood.setWeekendRate("regular", 150);
-//        hotelReservation.setHotels("Ridgewood", ridgewood);
-//
-//        // Define the date range and customer type
-//        LocalDate startDate = LocalDate.parse("2020-09-11");
-//        LocalDate endDate = LocalDate.parse("2020-09-12");
-//        String customerType = "regular";
-//
-//        // Call the method to find the cheapest hotel
-//        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
-//
-//        // Assert the result
-//        Assertions.assertEquals("Ridgewood, Rating: 5, Total Rates: $370", cheapestHotel);
-//    }
+    public void findCheapestBestRatedHotelForRewardedCustomerTest() {
+        HotelReservation hotelReservation = new HotelReservation();
+
+        // Set up hotels and rates
+        Hotel lakewood = new Hotel("Lakewood", 3);
+        lakewood.setRewardedWeekdayRate("rewarded", 80);
+        lakewood.setRewardedWeekendRate("rewarded", 80);
+        hotelReservation.setHotels("Lakewood", lakewood);
+
+        Hotel bridgewood = new Hotel("Bridgewood", 4);
+        bridgewood.setRewardedWeekdayRate("rewarded", 110);
+        bridgewood.setRewardedWeekendRate("rewarded", 50);
+        hotelReservation.setHotels("Bridgewood", bridgewood);
+
+        Hotel ridgewood = new Hotel("Ridgewood", 5);
+        ridgewood.setRewardedWeekdayRate("rewarded", 100);
+        ridgewood.setRewardedWeekendRate("rewarded", 40);
+        hotelReservation.setHotels("Ridgewood", ridgewood);
+
+        // Define the date range
+        LocalDate startDate = LocalDate.of(2020, 9, 11);
+        LocalDate endDate = LocalDate.of(2020, 9, 12);
+
+        // Call the method to find the cheapest best-rated hotel for rewarded customers
+        String result = hotelReservation.findCheapestBestRatedHotelForRewardedCustomer(startDate, endDate);
+
+        // Assert the result
+        Assertions.assertEquals("Ridgewood, Rating: 5, Total Rates: $140", result);
+    }
 }

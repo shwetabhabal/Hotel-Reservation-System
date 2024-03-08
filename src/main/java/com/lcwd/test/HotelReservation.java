@@ -53,13 +53,19 @@ public class HotelReservation {
         return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Rating: "+hotel.getRating()+ ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "regular"))
                 .orElse("No hotels available");
     }
-//public String findBestRatedHotel(LocalDate startDate, LocalDate endDate, String customerType) {
-//    Optional<Hotel> bestRatedHotel = hotels.values().stream()
-//            .max(Comparator.comparingInt(hotel ->
-//                    getTotalRateForDates(hotel, startDate, endDate, customerType)));
-//
-//    return bestRatedHotel.map(Hotel::getName).orElse("No hotels available");
-//}
+    public String findCheapestBestRatedHotelForRewardedCustomer(LocalDate startDate, LocalDate endDate) {
+        if (startDate.isAfter(endDate) || startDate.isEqual(endDate)) {
+            throw new IllegalArgumentException("End date must be after start date.");
+        }
+
+        Optional<Hotel> cheapestBestRatedHotel = hotels.values().stream()
+                .filter(hotel -> hotel.getRating() == hotels.values().stream()
+                        .mapToInt(Hotel::getRating).max().orElse(0))
+                .min(Comparator.comparingInt(hotel -> getTotalRateForDates(hotel, startDate, endDate, "rewarded")));
+
+        return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Rating: " + hotel.getRating() + ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "rewarded"))
+                .orElse("No hotels available");
+    }
     public static void main(String[] args) {
 
     }

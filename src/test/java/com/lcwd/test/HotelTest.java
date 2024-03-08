@@ -9,8 +9,8 @@ public class HotelTest {
         Hotel hotel = new Hotel("Lakewood", 3);
         String customerType = "regular";
         int rate = 110;
-        hotel.setWeekdayRate(customerType, rate);
-        Assertions.assertEquals(rate, hotel.getWeekdayRate(customerType));
+        hotel.setRewardedWeekdayRate(customerType, rate);
+        Assertions.assertEquals(rate, hotel.getRewardedWeekdayRate(customerType));
     }
 
 }
