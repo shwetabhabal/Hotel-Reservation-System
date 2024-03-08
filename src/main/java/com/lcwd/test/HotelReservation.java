@@ -23,11 +23,22 @@ public class HotelReservation {
         int totalRate = 0;
         LocalDate date = startDate;
         while (!date.isAfter(endDate)) {
-            if (isWeekend(date)) {
-                totalRate += hotel.getWeekendRate(customerType);
-            } else {
-                totalRate += hotel.getWeekdayRate(customerType);
+            if(isWeekend(date)) {
+                if (customerType.equals("rewarded")) {
+                    totalRate += hotel.getRewardedWeekendRate(customerType);
+                } else {
+                    totalRate += hotel.getRegularWeekendRate(customerType);
+                }
             }
+            else {
+                    if(customerType.equals("rewarded")){
+                        totalRate += hotel.getRewardedWeekdayRate(customerType);
+                    }
+                    else {
+                        totalRate += hotel.getRegularWeekdayRate(customerType);
+                    }
+                }
+
             date = date.plusDays(1);
         }
 
@@ -50,32 +61,6 @@ public class HotelReservation {
 //    return bestRatedHotel.map(Hotel::getName).orElse("No hotels available");
 //}
     public static void main(String[] args) {
-        HotelReservation hotelReservation = new HotelReservation();
-        Hotel lakewood = new Hotel("Lakewood", 3);
-        lakewood.setWeekdayRate("regular", 110);
-        lakewood.setWeekendRate("regular", 90);
-        hotelReservation.setHotels("Lakewood", lakewood);
 
-        // Set up Ridgewood hotel
-        Hotel ridgewood = new Hotel("Ridgewood", 5);
-        ridgewood.setWeekdayRate("regular", 220);
-        ridgewood.setWeekendRate("regular", 150);
-        hotelReservation.setHotels("Ridgewood", ridgewood);
-
-        // Set up Bridgewood hotel
-        Hotel bridgewood = new Hotel("Bridgewood",4);
-        bridgewood.setWeekdayRate("regular", 160);
-        bridgewood.setWeekendRate("regular", 60);
-        hotelReservation.setHotels("Bridgewood", bridgewood);
-
-
-        // Define the date range and customer type
-        LocalDate startDate = LocalDate.parse("2020-10-11");
-        LocalDate endDate = LocalDate.parse("2020-10-12");
-        String customerType = "regular";
-
-        // Call the method to find the cheapest hotel
-//        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
-//        System.out.println(cheapestHotel);
     }
 }
