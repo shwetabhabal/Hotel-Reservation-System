@@ -59,8 +59,7 @@ public class HotelReservation {
         }
 
         Optional<Hotel> cheapestBestRatedHotel = hotels.values().stream()
-                .filter(hotel -> hotel.getRating() == hotels.values().stream()
-                        .mapToInt(Hotel::getRating).max().orElse(0))
+                .filter(hotel -> hotel.getRating() == hotels.values().stream().mapToInt(Hotel::getRating).max().orElse(0))
                 .min(Comparator.comparingInt(hotel -> getTotalRateForDates(hotel, startDate, endDate, "rewarded")));
 
         return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Rating: " + hotel.getRating() + ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "rewarded"))
