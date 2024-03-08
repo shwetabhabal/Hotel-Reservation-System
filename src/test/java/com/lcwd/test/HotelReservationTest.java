@@ -13,7 +13,7 @@ public class HotelReservationTest {
     HotelReservation hotelReservation = new HotelReservation();
     // Set up hotels with their rates
     @Test
-    public void findCheapestHotelTest() {
+    public void findBestRatedHotelTest() {
         Hotel lakewood = new Hotel("Lakewood", 3);
         lakewood.setWeekdayRate("regular", 110);
         lakewood.setWeekendRate("regular", 90);
@@ -40,6 +40,6 @@ public class HotelReservationTest {
         String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
 
         // Assert the result
-        Assertions.assertEquals("Ridgewood, Total Rates: $370", cheapestHotel);
+        Assertions.assertEquals("Ridgewood, Rating: 5, Total Rates: $370", cheapestHotel);
     }
 }

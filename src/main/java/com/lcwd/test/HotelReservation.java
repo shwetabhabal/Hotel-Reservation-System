@@ -39,9 +39,16 @@ public class HotelReservation {
                         .mapToInt(Hotel::getRating).max().orElse(0))
                 .min(Comparator.comparingInt(hotel -> getTotalRateForDates(hotel, startDate, endDate, "regular")));
 
-        return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "regular"))
+        return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Rating: "+hotel.getRating()+ ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "regular"))
                 .orElse("No hotels available");
     }
+//public String findBestRatedHotel(LocalDate startDate, LocalDate endDate, String customerType) {
+//    Optional<Hotel> bestRatedHotel = hotels.values().stream()
+//            .max(Comparator.comparingInt(hotel ->
+//                    getTotalRateForDates(hotel, startDate, endDate, customerType)));
+//
+//    return bestRatedHotel.map(Hotel::getName).orElse("No hotels available");
+//}
     public static void main(String[] args) {
         HotelReservation hotelReservation = new HotelReservation();
         Hotel lakewood = new Hotel("Lakewood", 3);
@@ -68,7 +75,7 @@ public class HotelReservation {
         String customerType = "regular";
 
         // Call the method to find the cheapest hotel
-        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
-        System.out.println(cheapestHotel);
+//        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
+//        System.out.println(cheapestHotel);
     }
 }
