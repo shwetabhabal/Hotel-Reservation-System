@@ -9,8 +9,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HotelReservationTest {
-    HotelReservation hotelReservation = new HotelReservation();
 
+    HotelReservation hotelReservation = new HotelReservation();
     // Set up hotels with their rates
     @Test
     public void findCheapestHotelTest() {
@@ -37,9 +37,9 @@ public class HotelReservationTest {
         String customerType = "regular";
 
         // Call the method to find the cheapest hotel
-        String cheapestHotel = hotelReservation.findCheapestHotel(startDate, endDate, customerType);
+        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
 
         // Assert the result
-        Assertions.assertEquals("Lakewood, Total Rates: $200", cheapestHotel);
+        Assertions.assertEquals("Ridgewood, Total Rates: $370", cheapestHotel);
     }
 }

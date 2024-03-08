@@ -2,8 +2,10 @@ package com.lcwd.test;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class HotelReservation {
     private Map<String, Hotel> hotels;
@@ -19,7 +21,6 @@ public class HotelReservation {
     }
     public int getTotalRateForDates(Hotel hotel, LocalDate startDate, LocalDate endDate, String customerType){
         int totalRate = 0;
-
         LocalDate date = startDate;
         while (!date.isAfter(endDate)) {
             if (isWeekend(date)) {
@@ -32,35 +33,42 @@ public class HotelReservation {
 
         return totalRate;
     }
-    public String findCheapestHotel(LocalDate startDate, LocalDate endDate, String customerType) {
-        int minTotalRate = Integer.MAX_VALUE;
-        Hotel cheapestHotel = null;
+    public String findCheapestBestRatedHotel(LocalDate startDate, LocalDate endDate) {
+        Optional<Hotel> cheapestBestRatedHotel = hotels.values().stream()
+                .filter(hotel -> hotel.getRating() == hotels.values().stream()
+                        .mapToInt(Hotel::getRating).max().orElse(0))
+                .min(Comparator.comparingInt(hotel -> getTotalRateForDates(hotel, startDate, endDate, "regular")));
 
-        for (Hotel hotel : hotels.values()) {
-            int totalRate = getTotalRateForDates(hotel, startDate, endDate, customerType);
-            if (totalRate < minTotalRate) {
-                minTotalRate = totalRate;
-                cheapestHotel = hotel;
-            }
-        }
-
-        return cheapestHotel != null ? cheapestHotel.getName() + ", Total Rates: $" + minTotalRate : "No hotels available";
+        return cheapestBestRatedHotel.map(hotel -> hotel.getName() + ", Total Rates: $" + getTotalRateForDates(hotel, startDate, endDate, "regular"))
+                .orElse("No hotels available");
     }
-//    public static void main(String[] args) {
-//        HotelReservation hotelReservation = new HotelReservation();
-//        hotelReservation.setHotels("Lakewood");
-//        hotelReservation.setRates("Lakewood", Map.of("regular", 110));
-//        hotelReservation.setHotels("Bridgewood");
-//        hotelReservation.setRates("Bridgewood", Map.of("regular", 160));
-//        hotelReservation.setHotels("Ridgewood");
-//        hotelReservation.setRates("Ridgewood", Map.of("regular", 220));
-//        LocalDate startDate = LocalDate.parse("2020-09-10");
-//        LocalDate endDate = LocalDate.parse("2020-09-12");
-//        String customerType = "regular";
-//        String cheapHotel = hotelReservation.findCheapestHotel(startDate,endDate, customerType);
-//        int totalRate = hotelReservation.getTotalRateForDates(cheapHotel, startDate, endDate, customerType);
-//        System.out.println("Cheapest Hotel: "+cheapHotel+" Total Rates: "+totalRate);
-//    }
     public static void main(String[] args) {
+        HotelReservation hotelReservation = new HotelReservation();
+        Hotel lakewood = new Hotel("Lakewood", 3);
+        lakewood.setWeekdayRate("regular", 110);
+        lakewood.setWeekendRate("regular", 90);
+        hotelReservation.setHotels("Lakewood", lakewood);
+
+        // Set up Ridgewood hotel
+        Hotel ridgewood = new Hotel("Ridgewood", 5);
+        ridgewood.setWeekdayRate("regular", 220);
+        ridgewood.setWeekendRate("regular", 150);
+        hotelReservation.setHotels("Ridgewood", ridgewood);
+
+        // Set up Bridgewood hotel
+        Hotel bridgewood = new Hotel("Bridgewood",4);
+        bridgewood.setWeekdayRate("regular", 160);
+        bridgewood.setWeekendRate("regular", 60);
+        hotelReservation.setHotels("Bridgewood", bridgewood);
+
+
+        // Define the date range and customer type
+        LocalDate startDate = LocalDate.parse("2020-10-11");
+        LocalDate endDate = LocalDate.parse("2020-10-12");
+        String customerType = "regular";
+
+        // Call the method to find the cheapest hotel
+        String cheapestHotel = hotelReservation.findCheapestBestRatedHotel(startDate, endDate);
+        System.out.println(cheapestHotel);
     }
 }
